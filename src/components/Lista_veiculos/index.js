@@ -7,8 +7,9 @@ import { Card } from 'react-native-paper';
 export default function App() {
    const [{ data, loading, error }, refetch] = useAxios(
    
+    //'http://localhost/loccar-web/app/api/api_test.php',
+    //'http://localhost/loccar-web/app/api/api.php',
     'https://reqres.in/api/users?delay=1',
-   // 'http://localhost/loccar-web/app/api/api.php',
     {
       manual: true,
     }
