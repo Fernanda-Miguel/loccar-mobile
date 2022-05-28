@@ -1,56 +1,46 @@
-import React, { useState } from "react";
-import { FlatList, SafeAreaView, Text, TouchableOpacity } from "react-native";
-import styles from './style'; //exportando css style 
+import * as React from 'react';
+import { Text, View, Button, StyleSheet, ScrollText } from 'react-native';
+import useAxios from 'axios-hooks';
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
+import { Card } from 'react-native-paper';
 
-];
+export default function App() {
+   const [{ data, loading, error }, refetch] = useAxios(
+   
+    'https://reqres.in/api/users?delay=1',
+   // 'http://localhost/loccar-web/app/api/api.php',
+    {
+      manual: true,
+    }
+  )
 
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-    <Text style={[styles.title, textColor]}>{item.title}</Text>
-  </TouchableOpacity>
-);
-
-const App = () => {
-  const [selectedId, setSelectedId] = useState(null);
-
-  const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#fff" : "#249ea4";
-    const color = item.id === selectedId ? 'black' : 'white';
+  if (loading) return <Text>Loading...</Text>
+  if (error) return <ScrollText>{JSON.stringify(error, null, 2)}</ScrollText>
 
     return (
-      <Item
-        item={item}
-        onPress={() => setSelectedId(item.id)}
-        backgroundColor={{ backgroundColor }}
-        textColor={{ color }}
-      />
+      <View style={styles.container}>
+        <Button onPress={()=> refetch({
+          data: {
+            delay: 2
+          }
+        })} title="Carregar os dados" />
+        <Text style={styles.paragraph}>{JSON.stringify(data, null, 2)}</Text>
+      </View>
     );
-  };
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        extraData={selectedId}
-      />
-    </SafeAreaView>
-  );
-};
+    
+  
+}
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    //backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
+  paragraph: {
+    marginTop: 8,
+    
+  },
+});
