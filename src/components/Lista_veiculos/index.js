@@ -7,20 +7,19 @@ import { Card } from 'react-native-paper';
 export default function App() {
    const [{ data, loading, error }, refetch] = useAxios(
    
-    //'http://localhost/loccar-web/app/api/api_test.php',
-    //'http://localhost/loccar-web/app/api/api.php',
+    //para fazer a listagem da api necessario hospedar o sistema
     'https://reqres.in/api/users?delay=1',
     {
       manual: true,
     }
   )
 
-  if (loading) return <Text>Loading...</Text>
+  if (loading) return <Text style={styles.button}>Carregando...</Text>
   if (error) return <ScrollText>{JSON.stringify(error, null, 2)}</ScrollText>
 
     return (
       <View style={styles.container}>
-        <Button onPress={()=> refetch({
+        <Button color={"#249ea4"} onPress={()=> refetch({
           data: {
             delay: 2
           }
@@ -29,19 +28,20 @@ export default function App() {
       </View>
     );
 
-    
-  
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    //backgroundColor: '#ecf0f1',
     padding: 8,
   },
   paragraph: {
     marginTop: 8,
-    
+    color: "#fff",
   },
+  button: {
+     color: "#fff",
+     fontSize: 30,
+  }
 });
