@@ -8,7 +8,7 @@ export default function App() {
    const [{ data, loading, error }, refetch] = useAxios(
    
     //para fazer a listagem da api necessario hospedar o sistema
-    'https://reqres.in/api/users?delay=1',
+    'https://loccar123.000webhostapp.com/app/api/api.php',
     {
       manual: true,
     }
